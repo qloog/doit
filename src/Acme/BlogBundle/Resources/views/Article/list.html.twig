@@ -1,0 +1,9 @@
+{% extends 'AcmeBlogBundle::layout.html.twig' %}
+
+{% block main %}
+    <ul>
+        {% for article in articles %}
+            <li><a href="{{ path("acme_blog_article_show", {'id': article.id}) }}">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

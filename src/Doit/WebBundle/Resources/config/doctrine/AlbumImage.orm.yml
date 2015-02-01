@@ -1,0 +1,13 @@
+Doit\WebBundle\Entity\AlbumImage:
+    type: entity
+    table: album_image
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    lifecycleCallbacks: {  }

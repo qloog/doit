@@ -1,0 +1,4 @@
+services:
+#    doit_web.example:
+#        class: Doit\WebBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

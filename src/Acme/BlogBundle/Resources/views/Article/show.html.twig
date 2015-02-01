@@ -1,0 +1,24 @@
+{% extends 'AcmeBlogBundle::layout.html.twig' %}
+
+{% block main %}
+    <article>
+        <header>
+            <h1>{{ article.title }}</h1>
+        </header>
+        <section>
+            {{ article.content }}
+            <hr>
+            <section>
+                {% for comment in article.comments %}
+                <ul class="media-list">
+                    <li class="media">
+                        <div class="media-body">
+                            <p>{{ comment.comment.content }}</p>
+                        </div>
+                    </li>
+                </ul>
+                {% endfor %}
+            </section>
+        </section>
+    </article>
+{% endblock %}

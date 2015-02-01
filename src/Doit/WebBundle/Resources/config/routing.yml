@@ -1,0 +1,23 @@
+homepage:
+    pattern:  /
+    defaults: { _controller: DoitWebBundle:Default:index }
+
+register:
+    pattern:  /register
+    defaults: { _controller: DoitWebBundle:Register:index }
+
+register_success:
+    pattern:   /register/success
+    defaults:  { _controller: DoitWebBundle:Register:success }
+
+register_email_send:
+    pattern:   /register/email/send
+    defaults:  { _controller: DoitWebBundle:Register:sendEmail }
+
+register_email_verify:
+    pattern:   /register/email/verify
+    defaults:  { _controller: DoitWebBundle:Register:verifyEmail }
+
+register_email_check:
+    pattern:   /register/email/check
+    defaults:  { _controller: DoitWebBundle:Register:checkEmail }

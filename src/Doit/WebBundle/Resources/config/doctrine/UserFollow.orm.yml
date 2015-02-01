@@ -1,0 +1,38 @@
+Doit\WebBundle\Entity\UserFollow:
+    type: entity
+    table: user_follow
+    indexes:
+        followed_uid:
+            columns:
+                - followed_uid
+        user_id:
+            columns:
+                - user_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        followedUid:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '被关注的用户id'
+            column: followed_uid
+        userId:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '关注者的用户id'
+            column: user_id
+        status:
+            type: boolean
+            nullable: false
+            comment: '关注状态'
+            default: '1'
+    lifecycleCallbacks: {  }

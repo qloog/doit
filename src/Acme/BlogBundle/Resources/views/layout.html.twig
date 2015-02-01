@@ -1,0 +1,43 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    {% include 'AcmeBlogBundle:Public:navigate.html.twig' %}
+    <div class="container">
+
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-xs-12 col-sm-9">
+                {% block main %}{% endblock %}
+            </div>
+
+            {{ render(controller('AcmeBlogBundle:Public:sidebar')) }}
+        </div><!--/row-->
+
+        <hr>
+
+        <footer>
+            <p>&copy; Company 2014</p>
+        </footer>
+
+    </div><!--/.container-->
+{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets filter='css_url_rewrite, ?uglifycss'
+        '@AcmeBlogBundle/Resources/public/css/main.css'
+        output="css/compiled/build.css"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts filter='?uglifyjs2'
+        '@AcmeBlogBundle/Resources/public/vendor/jquery/dist/jquery.js'
+        '@AcmeBlogBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.js'
+        '@AcmeBlogBundle/Resources/public/js/main.js'
+        output="js/compiled/build.js"
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,14 @@
+parameters:
+    comment.subscriber.class: Acme\BlogBundle\EventListener\CommentSubscriber
+
+services:
+#    acme_blog.example:
+#        class: Acme\BlogBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    comment.subscriber:
+        class: %comment.subscriber.class%
+        arguments: [ '@doctrine_mongodb.odm.default_document_manager' ]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+

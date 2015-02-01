@@ -1,0 +1,44 @@
+Doit\WebBundle\Entity\UserMessage:
+    type: entity
+    table: user_message
+    id:
+        msgId:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            column: msg_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        fromUid:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '发送者uid'
+            column: from_uid
+        toUid:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: '接收者uid'
+            column: to_uid
+        content:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: '私信内容'
+        createTime:
+            type: datetime
+            nullable: false
+            comment: 创建时间
+            default: CURRENT_TIMESTAMP
+            column: create_time
+        status:
+            type: boolean
+            nullable: false
+            comment: '1正常，2删除'
+            default: '1'
+    lifecycleCallbacks: {  }

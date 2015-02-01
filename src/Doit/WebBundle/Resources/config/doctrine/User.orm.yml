@@ -1,0 +1,100 @@
+Doit\WebBundle\Entity\User:
+    type: entity
+    table: user
+    uniqueConstraints:
+        username_UNIQUE:
+            columns:
+                - username
+        email_UNIQUE:
+            columns:
+                - email
+    id:
+        userId:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: 自增用户ID
+            id: true
+            column: user_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: string
+            nullable: false
+            length: 50
+            fixed: true
+            comment: 用户名
+        email:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: 用户邮箱
+        password:
+            type: string
+            nullable: false
+            length: 32
+            fixed: true
+            comment: '用户密码'
+        activateCode:
+            type: string
+            nullable: false
+            length: 32
+            fixed: true
+            comment: '激活码，初次注册时使用'
+            default: ''
+            column: activate_code
+        activateExpire:
+            type: datetime
+            nullable: false
+            comment: '激活码过期时间'
+            default: '0000-00-00 00:00:00'
+            column: activate_expire
+        registerTime:
+            type: datetime
+            nullable: false
+            comment: 注册时间
+            default: CURRENT_TIMESTAMP
+            column: register_time
+        registerIp:
+            type: string
+            nullable: false
+            length: 15
+            fixed: true
+            comment: 注册ip
+            default: ''
+            column: register_ip
+        lastLoginTime:
+            type: datetime
+            nullable: false
+            comment: 上次登录时间
+            default: '0000-00-00 00:00:00'
+            column: last_login_time
+        lastLoginIp:
+            type: string
+            nullable: false
+            length: 20
+            fixed: true
+            comment: 上次登录ip
+            default: ''
+            column: last_login_ip
+        loginTimes:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: 登录次数
+            default: '0'
+            column: login_times
+        updateTime:
+            type: datetime
+            nullable: false
+            comment: 更新时间
+            default: '0000-00-00 00:00:00'
+            column: update_time
+        status:
+            type: boolean
+            nullable: false
+            comment: 0为未激活，1为激活
+            default: '0'
+    lifecycleCallbacks: {  }

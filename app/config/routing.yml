@@ -1,0 +1,7 @@
+doit_web:
+    resource: "@DoitWebBundle/Resources/config/routing.yml"
+    prefix:   /
+
+post:
+    resource: "@AcmeBlogBundle/Controller"
+    type:     annotation
