@@ -3,6 +3,7 @@
 namespace Doit\WebBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Doit\WebBundle\Entity\User;
 use \DateTime;
 
@@ -22,7 +23,7 @@ class RegisterController extends BaseController
             $userData['rePassword'] = $request->get('repassword');
             if ($userData['password'] != $userData['rePassword']) {
                 $this->get('session')->getFlashBag()->set('error', 'password not equal');
-                $this->redirect($this->generateUrl('register'));
+                return $this->redirect($this->generateUrl('register'));
             }
             $userData['register_ip'] = $request->getClientIp();
 
@@ -31,14 +32,14 @@ class RegisterController extends BaseController
             $user->setEmail($userData['email']);
             $user->setUsername($userData['username']);
             $user->setPassword($userData['password']);
+            $user->setRegisterTime(new DateTime());
             $user->setRegisterIp($userData['register_ip']);
             $user->setActivateCode('111111111');
-            $date = DateTime::createFromFormat('Y-m-d H:i:s', '2014-12-21 23:52:33');
-            $user->setActivateExpire($date->format('Y-m-d H:i:s'));
+            $user->setActivateExpire(new DateTime());
+            $user->setLastLoginTime(new DateTime());
             $user->setLastLoginIp('');
             $user->setLoginTimes(0);
-            $date = new DateTime('now');
-            $user->setUpdateTime($date->format('Y-m-d H:i:s'));
+            $user->setUpdateTime(new DateTime());
             $user->setStatus(0);
 
             $em->persist($user);
@@ -46,7 +47,7 @@ class RegisterController extends BaseController
 
             return $this->redirect($this->generateUrl('register_success'));
         }
-        echo 111;exit;
+        return $this->render('DoitWebBundle:Register:index.html.twig');
 
     }
 
@@ -78,7 +79,7 @@ class RegisterController extends BaseController
     /**
      * check email for form
      */
-    public function checkEemailAction()
+    public function checkEmailAction()
     {
 
     }

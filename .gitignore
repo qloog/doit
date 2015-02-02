@@ -89,5 +89,22 @@ crashlytics-build.properties
 /composer.phar
 
 *.php~
-
 app/Resources/node_modules/uglify-js/.npmignore
+*.DS_Store
+*.swp
+cache
+tmp
+temp
+*.sublime-*
+*.db
+*~
+test/*
+.project
+.*
+.settings/*
+.gitconfig
+tmp/*
+*.pyc
+*.log
+tags
+logs/*
