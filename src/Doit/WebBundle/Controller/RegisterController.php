@@ -23,7 +23,7 @@ class RegisterController extends BaseController
             $userData['rePassword'] = $request->get('repassword');
             if ($userData['password'] != $userData['rePassword']) {
                 $this->get('session')->getFlashBag()->set('error', 'password not equal');
-                return $this->redirect($this->generateUrl('register'));
+                return new Response('password not equal');
             }
             $userData['register_ip'] = $request->getClientIp();
 
@@ -45,10 +45,13 @@ class RegisterController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('register_success'));
+            $user = $em->getRepository('DoitWebBundle:User')->findOneBy(array('email' => $userData['email']));
+            if ($user) {
+                $this->sendEmail('wql2008@vip.qq.com', '元宵节快乐！', '节日快乐哦！ 快乐开心每一天^_^');
+                return $this->redirect($this->generateUrl('register_success'));
+            }
         }
         return $this->render('DoitWebBundle:Register:index.html.twig');
-
     }
 
     /**
@@ -56,22 +59,22 @@ class RegisterController extends BaseController
      */
     public function successAction()
     {
-        echo 'success';exit;
-
+        return $this->render('DoitWebBundle:Register:success.html.twig');
     }
 
     /**
      * send email to user
      */
-    public function sendEmailAction()
+    public function sendEmailAction(Request $request, $id, $hash)
     {
 
     }
 
     /**
      * verify email by active_code
+     * http://beta.edusoho.com/register/email/verify/ajdhhpt0hog04skc4o84c8gwo8c488w
      */
-    public function verifyEmailAction()
+    public function verifyEmailAction(Request $request, $token)
     {
 
     }
@@ -84,6 +87,20 @@ class RegisterController extends BaseController
 
     }
 
+    public function updateAction($id)
+    {
+//        $id = $this->request->get('id');
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository('DoitWebBundle:User')->find($id);
 
+        if (!$user) {
+            throw $this->createNotFoundException('No product found for id '.$id);
+        }
+
+        $user->setUsername('New name!');
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('register_success'));
+    }
 
 }

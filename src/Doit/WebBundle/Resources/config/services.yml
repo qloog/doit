@@ -1,4 +1,26 @@
+parameters:
+    security.handler.login_success_handler.class: Doit\WebBundle\Handler\LoginSuccessHandler
+    security.handler.logout_success_handler.class: Doit\WebBundle\Handler\LogoutSuccessHandler
+
 services:
 #    doit_web.example:
 #        class: Doit\WebBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+#    security.authentication_handler:
+#        class: Doit\WebBundle\Handler\AuthenticationHandler
+#        public: false
+#        arguments:
+#            - @router
+#            - @session
+
+    security.handler.login_success_handler:
+        class:  %security.handler.login_success_handler.class%
+        arguments:  [@router, @security.context]
+        #tags:
+        #    - { name: 'monolog.logger', channel: 'security' }
+    security.handler.logout_success_handler:
+        class:  %security.handler.logout_success_handler.class%
+        arguments:  [@router]
+        #tags:
+        #    - { name: 'monolog.logger', channel: 'security' }

@@ -41,12 +41,85 @@ security:
             logout:
                 path:   _demo_logout
                 target: _demo
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
+        # -> custom firewall for the admin area of the URL
+        admin:
+            switch_user:        true
+            context:            user
+            pattern:            /admin(.*)
+            form_login:
+                #provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: false
+                default_target_path:            /admin/dashboard
+                target_path_parameter:          _target_path
+                use_referer:                    false
+
+                failure_path:   null
+                use_referer:    true
+            logout:
+                path:           /admin/logout
+                target:         /admin/login
+            anonymous:    true
+        # -> end custom configuration
+
+        # default login area for standard users
+        main:
+
+            switch_user:        true
+            context:            user
+            pattern:            .*
+            form_login:
+                #provider:       fos_userbundle
+
+                # the user is redirected here when he/she needs to login
+                login_path:                     /login
+
+                # if true, forward the user to the login form instead of redirecting
+                use_forward:                    false
+
+                # submit the login form here
+                check_path:                     /login_check
+
+                # login success redirecting options (read further below)
+                #always_use_default_target_path: false
+                default_target_path:            /
+                #target_path_parameter:          _target_path
+                #use_referer:                    false
+
+                # login failure redirecting options (read further below)
+                failure_path:                   /login
+                failure_forward:                false
+
+                # csrf token options
+                #csrf_parameter:                 _csrf_token
+                #intention:                      authenticate
+
+                #success_handler:                 security.handler.login_success_handler
+
+            logout:
+                path:                           /logout
+                target:                         /login
+                success_handler:                security.handler.logout_success_handler
+            anonymous:          true
+        # -> end default configuration
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # -> custom access control for the admin area of the URL
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        # -> end
+
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

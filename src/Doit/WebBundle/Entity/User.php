@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"}), @ORM\UniqueConstraint(name="email_UNIQUE", columns={"email"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Doit\WebBundle\Repository\UserRepository")
  */
 class User
 {
@@ -66,7 +66,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="register_ip", type="string", length=15, nullable=false)
+     * @ORM\Column(name="register_ip", type="string", length=15, nullable=false, options={"fixed" = true})
      */
     private $registerIp;
 
@@ -80,7 +80,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="last_login_ip", type="string", length=20, nullable=false)
+     * @ORM\Column(name="last_login_ip", type="string", length=20, nullable=false, options={"fixed" = true})
      */
     private $lastLoginIp;
 
