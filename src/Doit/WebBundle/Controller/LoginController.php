@@ -86,8 +86,11 @@ class LoginController extends BaseController
 //            throw new AccessDeniedException("Wrong password");
 //        }
 
+        $session =  $request->getSession();
+        $session->set(SecurityContextInterface::LAST_USERNAME, $username);
+
         $security = $this->get('security.context');
-        $providerKey = $this->container->getParameter('security.main');
+        $providerKey = $this->container->getParameter('secret');
         $roles = $user->getRoles();
         $token = new UsernamePasswordToken($user, null, $providerKey, $roles);
         $security->setToken($token);

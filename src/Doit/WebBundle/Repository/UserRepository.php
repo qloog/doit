@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function getUserByEmailAndPassword($username, $password)
+    public function getUserByUsernameAndPassword($username, $password)
     {
         return $this->createQueryBuilder('u')
             ->where('u.email = :email or u.username = :username')
@@ -23,4 +23,5 @@ class UserRepository extends EntityRepository
             ->getQuery()
             ->getSingleResult();
     }
+
 }
