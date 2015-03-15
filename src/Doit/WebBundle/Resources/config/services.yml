@@ -1,11 +1,6 @@
 parameters:
     security.handler.login_success_handler.class: Doit\WebBundle\Handler\LoginSuccessHandler
     security.handler.logout_success_handler.class: Doit\WebBundle\Handler\LogoutSuccessHandler
-    platform.entity.user.class: Doit\WebBundle\Entity\User
-    platform.user.provider.class: Doit\WebBundle\Provider\UserProvider
-
-
-
 
 services:
 #    doit_web.example:
@@ -30,16 +25,3 @@ services:
         #tags:
         #    - { name: 'monolog.logger', channel: 'security' }
 
-    platform.user.manager:
-        class: Doctrine\ORM\EntityManager
-        factory_method: getManagerForClass
-        factory_service: doctrine
-        arguments: ['%platform.entity.user.class%']
-    platform.user.repository:
-        class: Doit\WebBundle\Repository\UserRepository
-        factory_method: getRepository
-        factory_service: platform.user.manager
-        arguments: ['%platform.entity.user.class%']
-    platform.user.provider:
-        class: %platform.user.provider.class%
-        arguments: ['@platform.user.repository']

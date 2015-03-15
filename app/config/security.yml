@@ -3,8 +3,9 @@
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-        #Doit\WebBundle\Entity\User: sha512
+        #Symfony\Component\Security\Core\User\User: plaintext
+        #Doit\WebBundle\Entity\User: bcrypt
+        FOS\UserBundle\Model\UserInterface: sha512
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -18,8 +19,12 @@ security:
 #                users:
 #                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
 #                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-        main:
-            entity: { class: Doit\WebBundle\Entity\User, property: username }
+        #default:
+            #password_encoder: sha1
+            #entity: { class: Doit\WebBundle\Entity\User, property: username }
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -45,29 +50,6 @@ security:
                 path:   _demo_logout
                 target: _demo
         # -> custom firewall for the admin area of the URL
-        admin:
-            switch_user:        true
-            context:            user
-            pattern:            /admin(.*)
-            form_login:
-                #provider:       fos_userbundle
-                login_path:     /admin/login
-                use_forward:    false
-                check_path:     /admin/login_check
-
-                # login success redirecting options (read further below)
-                always_use_default_target_path: false
-                default_target_path:            /admin/dashboard
-                target_path_parameter:          _target_path
-                use_referer:                    false
-
-                failure_path:   null
-                use_referer:    true
-            logout:
-                path:           /admin/logout
-                target:         /admin/login
-            #anonymous:    true
-        # -> end custom configuration
 
         # default login area for standard users
         main:
@@ -76,7 +58,8 @@ security:
             context:            user
             pattern:            .*
             form_login:
-                #provider:       fos_userbundle
+                provider:       fos_userbundle
+                csrf_provider:  form.csrf_provider
 
                 # the user is redirected here when he/she needs to login
                 login_path:                     /login
@@ -89,7 +72,7 @@ security:
 
                 # login success redirecting options (read further below)
                 #always_use_default_target_path: false
-                default_target_path:            /
+                #default_target_path:            /
                 #target_path_parameter:          _target_path
                 #use_referer:                    false
 

@@ -5,6 +5,7 @@ imports:
 framework:
     #esi:             ~
     #translator:      { fallback: "%locale%" }
+    translator:      ~
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -98,3 +99,8 @@ doctrine_mongodb:
         default:
             auto_mapping: true
 
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Doit\WebBundle\Entity\User
+    #resource: "@FOSUserBundle/Resources/config/routing/all.xml"
